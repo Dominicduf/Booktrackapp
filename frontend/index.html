@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BookTrack - Search</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>BookTrack</h1>
+      <nav>
+        <a href="/">Search</a>
+        <a href="/library">My Library</a>
+      </nav>
+    </header>
+    <main class="container">
+      <section class="card">
+        <form id="search-form" class="search-form">
+          <input id="q" type="search" placeholder="Search books..." required />
+          <button type="submit">Search</button>
+        </form>
+      </section>
+
+      <section id="results" class="grid"></section>
+    </main>
+
+    <script src="/static/js/search.js" defer></script>
+  </body>
+  </html>
+
+

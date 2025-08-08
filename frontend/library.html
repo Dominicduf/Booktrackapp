@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BookTrack - Library</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>My Library</h1>
+      <nav>
+        <a href="/">Search</a>
+        <a href="/library" class="active">My Library</a>
+      </nav>
+    </header>
+    <main class="container">
+      <div class="tabs">
+        <button data-status="to_read" class="tab active">To-Read</button>
+        <button data-status="reading" class="tab">Currently Reading</button>
+        <button data-status="finished" class="tab">Finished</button>
+      </div>
+      <section id="library-list" class="list"></section>
+    </main>
+
+    <script src="/static/js/library.js" defer></script>
+  </body>
+  </html>
+
+
