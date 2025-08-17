@@ -16,7 +16,7 @@ class BookBase(BaseModel):
 
 
 class BookCreate(BookBase):
-    pass
+    status: Optional[str] = Field(default="to_read", description="Reading status for the library entry")
 
 
 class BookOut(BookBase):

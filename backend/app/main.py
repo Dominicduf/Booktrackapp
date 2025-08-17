@@ -61,7 +61,8 @@ def add_or_update_library_item(
 ):
     book_in = payload
     book = crud.upsert_book(db, book_in)
-    entry = crud.get_or_create_entry(db, google_id=book.google_id, status="to_read")
+    status = getattr(payload, 'status', 'to_read') or 'to_read'
+    entry = crud.get_or_create_entry(db, google_id=book.google_id, status=status)
     return {
         "book": {
             "id": book.id,

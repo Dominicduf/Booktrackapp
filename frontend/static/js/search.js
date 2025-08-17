@@ -36,13 +36,23 @@ function renderResults(items) {
     desc.textContent = it.description ? it.description.slice(0, 160) + '…' : '';
     const actions = document.createElement('div');
     actions.className = 'actions';
+    
+    const statusSelect = document.createElement('select');
+    statusSelect.className = 'select';
+    statusSelect.innerHTML = `
+      <option value="to_read">To Read</option>
+      <option value="reading">Currently Reading</option>
+      <option value="completed">Finished</option>
+    `;
+    
     const btn = document.createElement('button');
     btn.className = 'btn';
     btn.textContent = 'Add to library';
     btn.onclick = async () => {
       btn.disabled = true;
       try {
-        await addToLibrary(it);
+        const selectedStatus = statusSelect.value;
+        await addToLibrary({...it, status: selectedStatus});
         btn.textContent = 'Added';
       } catch (e) {
         btn.textContent = 'Error';
@@ -50,6 +60,8 @@ function renderResults(items) {
         setTimeout(() => { btn.disabled = false; btn.textContent = 'Add to library'; }, 1200);
       }
     };
+    
+    actions.appendChild(statusSelect);
     actions.appendChild(btn);
 
     content.appendChild(h3);
@@ -63,12 +75,30 @@ function renderResults(items) {
   }
 }
 
-document.getElementById('search-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
+let searchTimeout;
+
+async function performSearch() {
   const q = document.getElementById('q').value.trim();
-  if (!q) return;
+  if (!q) {
+    document.getElementById('results').innerHTML = '';
+    return;
+  }
   const items = await searchBooks(q);
   renderResults(items);
+}
+
+document.getElementById('q').addEventListener('input', () => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(performSearch, 300);
+});
+
+document.getElementById('search-btn').addEventListener('click', performSearch);
+
+document.getElementById('q').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    clearTimeout(searchTimeout);
+    performSearch();
+  }
 });
 
 

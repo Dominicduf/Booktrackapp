@@ -58,6 +58,10 @@ def get_or_create_entry(
 ) -> models.LibraryEntry:
     entry = db.scalar(select(models.LibraryEntry).where(models.LibraryEntry.google_id == google_id))
     if entry:
+        entry.status = status
+        db.add(entry)
+        db.commit()
+        db.refresh(entry)
         return entry
     entry = models.LibraryEntry(google_id=google_id, status=status)
     db.add(entry)
